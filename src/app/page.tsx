@@ -1,9 +1,16 @@
 'use client'
 
+import { useState } from 'react'
 import { PianoKeyboard } from '@/components/piano/PianoKeyboard'
+import { OctaveSelector } from '@/components/piano/OctaveSelector'
+import { useAudioEngine } from '@/hooks/useAudioEngine'
 import { PIANO_CONFIG } from '@/lib/constants/pianoConfig'
 
 export default function Home() {
+  const [octaveCount, setOctaveCount] = useState<number>(PIANO_CONFIG.DEFAULT_OCTAVES)
+  const [startOctave, setStartOctave] = useState<number>(PIANO_CONFIG.DEFAULT_START_OCTAVE)
+  const { activeNotes, noteOn, noteOff } = useAudioEngine()
+
   return (
     <main
       style={{
@@ -30,11 +37,19 @@ export default function Home() {
         VIRTUAL PIANO
       </h1>
 
+      <OctaveSelector
+        octaveCount={octaveCount}
+        startOctave={startOctave}
+        onOctaveCountChange={setOctaveCount}
+        onStartOctaveChange={setStartOctave}
+      />
+
       <PianoKeyboard
-        octaveCount={PIANO_CONFIG.DEFAULT_OCTAVES}
-        startOctave={PIANO_CONFIG.DEFAULT_START_OCTAVE}
-        onNoteOn={() => {}}
-        onNoteOff={() => {}}
+        octaveCount={octaveCount}
+        startOctave={startOctave}
+        onNoteOn={noteOn}
+        onNoteOff={noteOff}
+        activeNotes={activeNotes}
       />
     </main>
   )

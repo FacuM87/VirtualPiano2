@@ -45,11 +45,13 @@ export function PianoKey({ pianoNote, isActive, onPointerDown, onPointerUp }: Pi
           borderRadius: '0 0 4px 4px',
           cursor: 'pointer',
           userSelect: 'none',
+          transformOrigin: 'top center',
+          transform: isActive ? 'translateY(3px) scaleY(0.985)' : 'translateY(0) scaleY(1)',
           backgroundColor: isActive ? 'var(--color-key-black-active)' : 'var(--color-key-black)',
           boxShadow: isActive
-            ? '0 0 8px var(--color-accent-cyan), inset 0 -2px 4px rgba(0,229,255,0.3)'
-            : '2px 4px 6px rgba(0,0,0,0.6)',
-          transition: 'background-color 0.05s',
+            ? '0 0 10px var(--color-accent-cyan), inset 0 -2px 4px rgba(0,229,255,0.3)'
+            : '2px 5px 8px rgba(0,0,0,0.7)',
+          transition: 'transform 0.06s ease-out, background-color 0.05s, box-shadow 0.05s',
         }}
       />
     )
@@ -70,13 +72,15 @@ export function PianoKey({ pianoNote, isActive, onPointerDown, onPointerUp }: Pi
         borderRadius: '0 0 6px 6px',
         cursor: 'pointer',
         userSelect: 'none',
+        transformOrigin: 'top center',
+        transform: isActive ? 'translateY(4px) scaleY(0.978)' : 'translateY(0) scaleY(1)',
         backgroundColor: isActive ? 'var(--color-key-white-active)' : 'var(--color-key-white)',
         boxShadow: isActive
-          ? '0 0 10px var(--color-accent-cyan), inset 0 -3px 6px rgba(0,229,255,0.4)'
-          : '1px 2px 4px rgba(0,0,0,0.3)',
+          ? '0 0 12px var(--color-accent-cyan), inset 0 -4px 8px rgba(0,229,255,0.35)'
+          : '1px 3px 5px rgba(0,0,0,0.35)',
         borderLeft: '1px solid rgba(0,0,0,0.15)',
         borderBottom: '1px solid rgba(0,0,0,0.2)',
-        transition: 'background-color 0.05s',
+        transition: 'transform 0.06s ease-out, background-color 0.05s, box-shadow 0.05s',
       }}
     />
   )
