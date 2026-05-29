@@ -5,13 +5,10 @@ export type NoteName =
 export type Waveform = 'piano' | 'sine' | 'square' | 'triangle' | 'sawtooth'
 
 export interface PianoNote {
-  /** Full note label e.g. "C4", "F#3" */
   note: string
-  /** Note name without octave */
   name: NoteName
   octave: number
   isBlack: boolean
-  /** Position index among white keys (for layout) */
   whiteIndex: number
 }
 
@@ -32,7 +29,6 @@ export interface LoopSlot {
 }
 
 export interface KeyState {
-  /** Notes currently pressed (note string → true) */
   active: Set<string>
 }
 
