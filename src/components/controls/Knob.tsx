@@ -64,29 +64,22 @@ export function Knob({
     onChange(newValue)
   }
 
-  const onPointerUp = () => {
-    dragRef.current = null
-  }
+  const onPointerUp = () => { dragRef.current = null }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, userSelect: 'none' }}>
+    <div className="flex flex-col items-center gap-1 select-none">
       <svg
         width={SIZE}
         height={SIZE}
         viewBox={`0 0 ${SIZE} ${SIZE}`}
-        style={{ cursor: 'ns-resize', touchAction: 'none' }}
+        className="cursor-ns-resize touch-none"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerLeave={onPointerUp}
       >
-        {/* Knob body */}
         <circle cx={CX} cy={CY} r={19} fill="var(--color-bg-panel-dark)" stroke="var(--color-border-subtle)" strokeWidth={1} />
-
-        {/* Track arc */}
         <path d={trackPath} stroke="var(--color-border-subtle)" strokeWidth={3} fill="none" strokeLinecap="round" />
-
-        {/* Value arc */}
         {valuePath && (
           <path
             d={valuePath}
@@ -97,8 +90,6 @@ export function Knob({
             style={{ filter: `drop-shadow(0 0 4px ${color})` }}
           />
         )}
-
-        {/* Indicator dot */}
         <circle
           cx={indicator.x}
           cy={indicator.y}
@@ -108,10 +99,10 @@ export function Knob({
         />
       </svg>
 
-      <span style={{ fontFamily: 'var(--font-family-mono)', fontSize: '0.65rem', letterSpacing: '0.12em', color }}>
+      <span className="font-mono text-[0.65rem] tracking-[0.12em]" style={{ color }}>
         {formatValue(value)}
       </span>
-      <span style={{ fontFamily: 'var(--font-family-mono)', fontSize: '0.55rem', letterSpacing: '0.15em', color: 'var(--color-text-dim)', textTransform: 'uppercase' }}>
+      <span className="font-mono text-[0.55rem] tracking-[0.15em] text-text-dim uppercase">
         {label}
       </span>
     </div>

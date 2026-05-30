@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useCallback } from 'react'
 import { usePianoLayout } from '@/hooks/usePianoLayout'
 import { PianoKey } from './PianoKey'
 import { PIANO_CONFIG } from '@/lib/constants/pianoConfig'
@@ -26,24 +26,10 @@ export function PianoKeyboard({
   const handlePointerUp = useCallback((note: string) => onNoteOff(note), [onNoteOff])
 
   return (
-    <div
-      style={{
-        overflowX: 'auto',
-        overflowY: 'hidden',
-        width: '100%',
-        padding: '0 16px 16px',
-      }}
-    >
+    <div className="overflow-x-auto overflow-y-hidden w-full px-4 pb-4">
       <div
-        style={{
-          position: 'relative',
-          width: totalWidthPx,
-          height: PIANO_CONFIG.WHITE_KEY_HEIGHT,
-          margin: '0 auto',
-          backgroundColor: 'var(--color-bg-panel-dark)',
-          borderRadius: '0 0 8px 8px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
-        }}
+        className="relative mx-auto bg-bg-panel-dark rounded-b-lg shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
+        style={{ width: totalWidthPx, height: PIANO_CONFIG.WHITE_KEY_HEIGHT }}
       >
         {keys.map((pianoNote) => (
           <PianoKey

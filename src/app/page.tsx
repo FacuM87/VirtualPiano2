@@ -13,28 +13,8 @@ export default function Home() {
   const { activeNotes, noteOn, noteOff, controls, setVolume, setReverbWet, setChorusWet, setWaveform } = useAudioEngine()
 
   return (
-    <main
-      style={{
-        display: 'flex',
-        minHeight: '100vh',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'var(--color-bg-primary)',
-        gap: '1.5rem',
-        padding: '2rem',
-      }}
-    >
-      <h1
-        style={{
-          fontFamily: 'var(--font-family-mono)',
-          fontSize: '1.25rem',
-          letterSpacing: '0.3em',
-          color: 'var(--color-accent-cyan)',
-          margin: 0,
-          textShadow: '0 0 20px var(--color-accent-cyan)',
-        }}
-      >
+    <main className="flex min-h-screen flex-col items-center justify-center bg-bg-primary gap-6 p-8">
+      <h1 className="font-mono text-xl tracking-[0.3em] text-accent-cyan m-0 [text-shadow:0_0_20px_var(--color-accent-cyan)]">
         VIRTUAL PIANO
       </h1>
 
