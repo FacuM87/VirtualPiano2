@@ -16,13 +16,17 @@ let reverb: any = null
 let masterVolume: any = null
 
 let initialized = false
-let initializing = false
+let initPromise: Promise<void> | null = null
 let preloading = false
 let currentWaveform: Waveform = PIANO_CONFIG.DEFAULT_WAVEFORM
 
 async function loadTone() {
   if (Tone) return
   Tone = await import('tone')
+  // Lower lookahead: 20ms instead of default 100ms. Better real-time feel for
+  // Transport-based loop playback; still safe for modern hardware.
+  Tone.getContext().lookAhead = 0.02
+  Tone.getContext().updateInterval = 0.01
 }
 
 // Salamander Grand Piano — free 48-velocity stereo grand piano samples
@@ -76,20 +80,15 @@ async function buildGraph() {
 
 async function ensureInitialized() {
   if (initialized) return
-  if (initializing) {
-    await new Promise<void>((resolve) => {
-      const id = setInterval(() => {
-        if (initialized) { clearInterval(id); resolve() }
-      }, 50)
-    })
-    return
+  if (!initPromise) {
+    initPromise = (async () => {
+      await loadTone()
+      await Tone.start()
+      await buildGraph()
+      initialized = true
+    })()
   }
-  initializing = true
-  await loadTone()
-  await Tone.start()
-  await buildGraph()
-  initialized = true
-  initializing = false
+  await initPromise
 }
 
 function activeInstrument() {
@@ -183,6 +182,18 @@ export function getToneInstance(): any {
 
 export function getToneNow(): number {
   return Tone ? Tone.now() : 0
+}
+
+/** Synchronous fast path — only call when isReady() is true. */
+export function playNoteSync(note: string, velocity = 0.8): void {
+  if (currentWaveform === 'piano' && !samplerLoaded) return
+  activeInstrument().triggerAttack(note, Tone.now(), velocity)
+}
+
+/** Synchronous fast path — only call when isReady() is true. */
+export function stopNoteSync(note: string): void {
+  if (currentWaveform === 'piano' && !samplerLoaded) return
+  activeInstrument().triggerRelease(note, Tone.now())
 }
 
 export function scheduleNote(note: string, duration: number, time: number, velocity: number): void {

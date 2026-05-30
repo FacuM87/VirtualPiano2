@@ -16,13 +16,21 @@ export function useAudioEngine() {
     waveform: PIANO_CONFIG.DEFAULT_WAVEFORM,
   })
 
-  const noteOn = useCallback(async (note: string) => {
-    await engine.playNote(note)
+  const noteOn = useCallback((note: string) => {
+    if (engine.isReady()) {
+      engine.playNoteSync(note)
+    } else {
+      void engine.playNote(note)
+    }
     setActiveNotes((prev) => new Set(prev).add(note))
   }, [])
 
-  const noteOff = useCallback(async (note: string) => {
-    await engine.stopNote(note)
+  const noteOff = useCallback((note: string) => {
+    if (engine.isReady()) {
+      engine.stopNoteSync(note)
+    } else {
+      void engine.stopNote(note)
+    }
     setActiveNotes((prev) => {
       const next = new Set(prev)
       next.delete(note)

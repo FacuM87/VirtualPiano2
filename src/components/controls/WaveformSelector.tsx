@@ -19,7 +19,7 @@ export function WaveformSelector({ value, onChange }: WaveformSelectorProps) {
   return (
     <div className="flex flex-col items-center gap-2">
       <span className="font-mono text-[0.55rem] tracking-[0.15em] text-text-dim uppercase">
-        WAVEFORM
+        Sounds
       </span>
       <div className="flex gap-1">
         {WAVEFORMS.map((w) => {
