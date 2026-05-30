@@ -176,3 +176,17 @@ export async function getTone() {
   await loadTone()
   return Tone
 }
+
+export function getToneInstance(): any {
+  return Tone
+}
+
+export function getToneNow(): number {
+  return Tone ? Tone.now() : 0
+}
+
+export function scheduleNote(note: string, duration: number, time: number, velocity: number): void {
+  if (!initialized) return
+  if (currentWaveform === 'piano' && !samplerLoaded) return
+  activeInstrument().triggerAttackRelease(note, duration, time, velocity)
+}
