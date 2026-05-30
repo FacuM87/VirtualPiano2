@@ -3,13 +3,14 @@
 import { useState } from 'react'
 import { PianoKeyboard } from '@/components/piano/PianoKeyboard'
 import { OctaveSelector } from '@/components/piano/OctaveSelector'
+import { ControlPanel } from '@/components/controls/ControlPanel'
 import { useAudioEngine } from '@/hooks/useAudioEngine'
 import { PIANO_CONFIG } from '@/lib/constants/pianoConfig'
 
 export default function Home() {
   const [octaveCount, setOctaveCount] = useState<number>(PIANO_CONFIG.DEFAULT_OCTAVES)
   const [startOctave, setStartOctave] = useState<number>(PIANO_CONFIG.DEFAULT_START_OCTAVE)
-  const { activeNotes, noteOn, noteOff } = useAudioEngine()
+  const { activeNotes, noteOn, noteOff, controls, setVolume, setReverbWet, setChorusWet, setWaveform } = useAudioEngine()
 
   return (
     <main
@@ -20,7 +21,7 @@ export default function Home() {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'var(--color-bg-primary)',
-        gap: '2rem',
+        gap: '1.5rem',
         padding: '2rem',
       }}
     >
@@ -36,6 +37,14 @@ export default function Home() {
       >
         VIRTUAL PIANO
       </h1>
+
+      <ControlPanel
+        controls={controls}
+        onVolumeChange={setVolume}
+        onReverbChange={setReverbWet}
+        onChorusChange={setChorusWet}
+        onWaveformChange={setWaveform}
+      />
 
       <OctaveSelector
         octaveCount={octaveCount}
